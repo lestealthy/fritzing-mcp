@@ -79,6 +79,7 @@ KNOWLEDGE = [
     ("fritzing://knowledge/validation", "knowledge/VALIDATION_GUIDE.md"),
     ("fritzing://knowledge/rules", "knowledge/MCP_AGENT_RULES.md"),
     ("fritzing://knowledge/troubleshooting", "knowledge/TROUBLESHOOTING.md"),
+    ("fritzing://knowledge/agent-contract", "knowledge/AGENT_CONTRACT.md"),
 ]
 
 

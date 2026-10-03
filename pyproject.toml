@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fritzing-mcp"
+version = "1.0.0"
+description = "WattLab Controlled Fritzing MCP - a restricted engineering MCP for AI agents over Fritzing"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "GPL-2.0-or-later"}
+dependencies = ["mcp>=2.3.0", "pydantic>=2.0", "pywin32>=308"]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[tool.setuptools]
+packages = ["server"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

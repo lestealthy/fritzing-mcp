@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+cache/
+*.tmp
+projects/active/WTL-FZ-*
+projects/completed/WTL-FZ-*
+projects/rejected/WTL-FZ-*
+**/fritzing_profile/

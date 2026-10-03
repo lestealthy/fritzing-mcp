@@ -7,8 +7,8 @@ from pathlib import Path
 
 from ..config import config
 from ..errors import McpError, error_dict
-from ..policy import (can_transition, custom_parts_enabled, part_allowed_for_placement,
-                      transition)
+from ..policy import (can_transition, custom_parts_enabled, invalidate_validation,
+                      part_allowed_for_placement, transition)
 from ..security.audit import log_event, new_transaction_id
 from ..storage import projects
 from ..fritzing import installation, parts, render, sketch, validation
@@ -93,21 +93,19 @@ def register(server) -> None:  # noqa: C901 - registration table
             part = parts.get_part(part_id)
             trust = part["trust"]
             if not part_allowed_for_placement(trust):
-                projects.rollback(pdir, manifest)
+                projects.rollback(pdir, manifest, txid)
                 return error_dict("PART_NOT_TRUSTED", f"Part trust level '{trust}' is not allowed by policy.",
                                   suggestion="Use OFFICIAL or VERIFIED parts, or ask an administrator to change policy.")
+            invalidate_validation(manifest, "place_part")
             inst = sketch.add_instance(manifest, part_id, part["title"], view, x, y, rotation, trust)
-            try:
-                if manifest["state"] in ("CREATED", "DISCOVERED"):
-                    transition(manifest, "DISCOVERED") if manifest["state"] == "CREATED" else None
-                    transition(manifest, "PLACED") if manifest["state"] == "DISCOVERED" else None
-                elif manifest["state"] in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
-                    manifest["state"] = "PLACED"  # force re-validation
-                else:
-                    pass
-            except McpError:
+            if manifest["state"] in ("CREATED", "DISCOVERED"):
+                if manifest["state"] == "CREATED":
+                    transition(manifest, "DISCOVERED")
+                transition(manifest, "PLACED")
+            elif manifest["state"] in ("PLACED", "WIRED", "SAVED"):
                 pass
-            manifest["dirty"] = True
+            elif manifest["state"] in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
+                manifest["state"] = "PLACED"  # force re-validation
             projects.finalize(pdir, manifest, txid, "fritzing_place_part",
                               {"part_id": part_id, "instance_id": inst["instance_id"]})
             return {"instance_id": inst["instance_id"], "part_id": part_id, "title": part["title"], "state": manifest["state"]}
@@ -121,7 +119,7 @@ def register(server) -> None:  # noqa: C901 - registration table
             pdir, manifest, txid = projects.mutation(project_id, "fritzing_move_part",
                                                      {"instance_id": instance_id, "x": x, "y": y})
             inst = sketch.move_instance(manifest, instance_id, x, y, None if rotation == -1 else rotation)
-            manifest["dirty"] = True
+            invalidate_validation(manifest, "move_part")
             projects.finalize(pdir, manifest, txid, "fritzing_move_part", {"instance_id": instance_id})
             return {"instance_id": instance_id, "x": inst["x"], "y": inst["y"], "rotation": inst["rotation"]}
         except McpError as e:
@@ -138,8 +136,9 @@ def register(server) -> None:  # noqa: C901 - registration table
             try:
                 conn = sketch.add_connection(manifest, from_instance, from_connector, to_instance, to_connector)
             except McpError as e:
-                projects.rollback(pdir, manifest)
+                projects.rollback(pdir, manifest, txid)
                 return e.to_dict()
+            invalidate_validation(manifest, "wire")
             try:
                 if manifest["state"] == "PLACED":
                     transition(manifest, "WIRED")
@@ -147,7 +146,6 @@ def register(server) -> None:  # noqa: C901 - registration table
                     manifest["state"] = "WIRED"  # force re-validation before next save
             except McpError:
                 pass
-            manifest["dirty"] = True
             projects.finalize(pdir, manifest, txid, "fritzing_wire",
                               {"from_instance": from_instance, "to_instance": to_instance,
                                "from_connector": from_connector, "to_connector": to_connector})
@@ -184,6 +182,24 @@ def register(server) -> None:  # noqa: C901 - registration table
             manifest = sketch.load_manifest(pdir)
             if view not in ("breadboard", "schematic", "pcb", "all"):
                 return error_dict("INVALID_CONNECTION", "view must be breadboard|schematic|pcb|all")
+            # render requires a validated, non-stale project
+            validation = manifest.get("validation", {})
+            if manifest.get("dirty") or validation.get("stale"):
+                return error_dict("PROJECT_NOT_VALIDATED",
+                                  "Project must be validated after the last mutation before rendering.",
+                                  suggestion="Call fritzing_validate_project and ensure it does not FAIL.")
+            status = validation.get("status")
+            if not status:
+                return error_dict("PROJECT_NOT_VALIDATED",
+                                  "Project has never been validated.",
+                                  suggestion="Call fritzing_validate_project before rendering.")
+            if status == "FAIL":
+                return error_dict("RENDER_DENIED",
+                                  "Validation FAILED; render denied.",
+                                  suggestion="Fix validation errors, then validate again.")
+            if manifest.get("state") not in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
+                return error_dict("PROJECT_NOT_VALIDATED",
+                                  f"Render requires state VALIDATED; current state is {manifest.get('state')}.")
             # ensure an up-to-date .fzz exists
             sketch.pack_fzz(pdir, manifest)
             result = render.render_project(pdir, manifest, view)

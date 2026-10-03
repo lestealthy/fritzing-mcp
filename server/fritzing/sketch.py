@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import zipfile
 import xml.etree.ElementTree as ET
@@ -130,14 +131,10 @@ def add_connection(manifest: dict, from_instance: str, from_connector: str,
     find_instance(manifest, to_instance)
     from .parts import get_connectors, get_part
 
-    try:
-        src = {c["connector_id"] for c in get_connectors(_instance_part(manifest, from_instance))}
-    except McpError:
-        src = set()
-    try:
-        dst = {c["connector_id"] for c in get_connectors(_instance_part(manifest, to_instance))}
-    except McpError:
-        dst = set()
+    src = {c["connector_id"] for c in get_connectors(_instance_part(manifest, from_instance))}
+    dst = {c["connector_id"] for c in get_connectors(_instance_part(manifest, to_instance))}
+    if not src or not dst:
+        raise McpError("PART_NOT_FOUND", "A referenced part has no resolved connectors.")
     if src and from_connector not in src:
         raise McpError("CONNECTOR_NOT_FOUND", f"Connector '{from_connector}' not on source instance.",
                        suggestion="Call fritzing_get_part_connectors to list valid connector IDs.")
@@ -296,14 +293,29 @@ def safe_extract_fzz(fzz_path: Path, dest: Path) -> Path:
         raise McpError("UNSAFE_ARCHIVE", "Archive too large (possible zip bomb).")
     allowed_ext = {".fz", ".fzp", ".svg", ".fzz", ".fzpz", ".png", ".json", ".txt", ".md", ".css", ".html"}
     for info in zf.infolist():
-        name = info.filename
-        if name.startswith("/") or ".." in Path(name.replace("\\", "/")).parts:
+        name = info.filename.replace("\\", "/")
+        if name.startswith("/") or name.startswith("~"):
             raise McpError("UNSAFE_ARCHIVE", f"Unsafe member path: {name}")
+        if re.match(r"^[A-Za-z]:[\\/]", name) or name.startswith("\\\\") or ".." in Path(name).parts:
+            raise McpError("UNSAFE_ARCHIVE", f"Unsafe member path: {name}")
+        # Windows-style traversal / device paths
+        low = name.lower()
+        if low.startswith(("\\\\", "//", "~")) or low.startswith("\\\\?\\") or low.startswith("\\\\.\\"):
+            raise McpError("UNSAFE_ARCHIVE", f"Unsafe member path: {name}")
+        if ".." in name.replace("\\", "/").split("/"):
+            raise McpError("UNSAFE_ARCHIVE", f"Traversal in member: {name}")
+        if Path(name).is_absolute() or re.match(r"^[A-Za-z]:", name):
+            raise McpError("UNSAFE_ARCHIVE", f"Absolute member path: {name}")
         if info.file_size > int(limits["max_member_bytes"]):
             raise McpError("UNSAFE_ARCHIVE", f"Member too large: {name}")
         if Path(name).suffix.lower() not in allowed_ext:
             raise McpError("UNSAFE_ARCHIVE", f"Unexpected file type in archive: {name}")
     dest.mkdir(parents=True, exist_ok=True)
+    dest_resolved = dest.resolve(strict=False)
+    for info in zf.infolist():
+        target = (dest / info.filename).resolve(strict=False)
+        if not str(target).lower().startswith(str(dest_resolved).lower()):
+            raise McpError("UNSAFE_ARCHIVE", f"Extraction would escape target: {info.filename}")
     zf.extractall(dest)
     zf.close()
     return dest

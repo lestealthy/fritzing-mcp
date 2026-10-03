@@ -122,3 +122,21 @@ def part_allowed_for_placement(trust: str) -> bool:
 
 
 ALLOWED_ARTIFACT_EXTENSIONS = {".fzz", ".fz", ".fzp", ".fzpz", ".svg", ".png", ".json", ".md", ".log"}
+
+
+def invalidate_validation(manifest: dict, reason: str = "mutation") -> None:
+    """Centrally invalidate prior validation after any structural mutation."""
+    manifest["dirty"] = True
+    manifest["validation"] = {"status": None, "stale": True, "stale_reason": reason}
+    if manifest.get("state") in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
+        # revert to the appropriate editing state
+        if manifest.get("connections"):
+            manifest["state"] = "WIRED"
+        elif manifest.get("parts"):
+            manifest["state"] = "PLACED"
+        else:
+            manifest["state"] = "CREATED"
+
+
+def save_policy() -> dict:
+    return load_policy().get("save", DEFAULT_POLICY["save"])

@@ -227,9 +227,11 @@ def run_validation(project_dir: Path, manifest: dict) -> dict:
         "warnings": warnings,
         "needs_human_review": review,
         "stages": {k: len(v) for k, v in stages.items()},
+        "stale": False,
         "timestamp": __import__("datetime").datetime.now().isoformat(),
     }
     manifest["validation"] = result
+    manifest["dirty"] = False
     try:
         (project_dir / "validation.json").write_text(__import__("json").dumps(result, indent=2), encoding="utf-8")
     except OSError:

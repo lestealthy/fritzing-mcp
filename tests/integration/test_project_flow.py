@@ -116,6 +116,13 @@ def test_led_golden_project():
     result = validation.run_validation(pdir, manifest)
     assert result["status"] in ("PASS", "PASS_WITH_WARNINGS")
     assert fzz.is_file()
+    if manifest.get("state") in ("WIRED", "PLACED"):
+        manifest["state"] = "VALIDATED"
+    elif manifest.get("state") == "CREATED":
+        manifest["state"] = "VALIDATED"
+    sketch.save_manifest(pdir, manifest)
+    saved = projects.save_project(info["project_id"])
+    assert saved["status"] in ("verified", "verified_with_warnings")
 
 
 def test_sensor_golden_project():

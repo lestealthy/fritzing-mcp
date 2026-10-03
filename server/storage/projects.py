@@ -22,15 +22,41 @@ def _year() -> int:
     return datetime.now().year
 
 
+_COUNTER = None
+
+
 def _next_id() -> str:
-    year = _year()
-    best = 0
-    for root in (config.projects_active, config.projects_completed, config.projects_rejected):
-        for d in root.glob(f"WTL-FZ-{year}-*"):
-            m = re.match(rf"WTL-FZ-{year}-(\d+)", d.name)
-            if m:
-                best = max(best, int(m.group(1)))
-    return f"WTL-FZ-{year}-{best + 1:04d}"
+    import contextlib
+    import time
+
+    lock_path = config.projects_dir / ".alloc.lock"
+    config.projects_dir.mkdir(parents=True, exist_ok=True)
+    # Windows-compatible atomic lock via msvcrt-style open with exclusive create loop
+    import msvcrt
+
+    fd = open(lock_path, "a+b")
+    try:
+        try:
+            msvcrt.locking(fd.fileno(), msvcrt.LK_NBLCK, 1)
+        except OSError:
+            # another process holds the lock; spin briefly
+            for _ in range(50):
+                time.sleep(0.1)
+                try:
+                    msvcrt.locking(fd.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    continue
+        year = _year()
+        best = 0
+        for root in (config.projects_active, config.projects_completed, config.projects_rejected):
+            for d in root.glob(f"WTL-FZ-{year}-*"):
+                m = re.match(rf"WTL-FZ-{year}-(\d+)", d.name)
+                if m:
+                    best = max(best, int(m.group(1)))
+        return f"WTL-FZ-{year}-{best + 1:04d}"
+    finally:
+        fd.close()
 
 
 def find_project_dir(project_id: str) -> Path | None:
@@ -84,26 +110,34 @@ def mutation(project_id: str, tool: str, params: dict):
     pdir = get_project_dir(project_id)
     manifest = sketch.load_manifest(pdir)
     txid = new_transaction_id()
-    _checkpoint(pdir, manifest)
+    _checkpoint(pdir, manifest, txid)
     return pdir, manifest, txid
 
 
-def _checkpoint(pdir: Path, manifest: dict) -> None:
+def _checkpoint(pdir: Path, manifest: dict, txid: str | None = None) -> None:
     import time
 
     ck = pdir / "checkpoints"
     ck.mkdir(exist_ok=True)
     stamp = time.strftime("%Y%m%d_%H%M%S") + f"_{int(time.time() * 1000) % 1000:03d}"
+    name = f"project_{stamp}_tx_{txid}.json" if txid else f"project_{stamp}.json"
     try:
-        shutil.copy2(pdir / "project.json", ck / f"project_{stamp}.json")
+        shutil.copy2(pdir / "project.json", ck / name)
         if (pdir / "circuit.fzz").exists():
-            shutil.copy2(pdir / "circuit.fzz", ck / f"circuit_{stamp}.fzz")
+            shutil.copy2(pdir / "circuit.fzz", ck / name.replace("project_", "circuit_").replace(".json", ".fzz"))
     except OSError:
         pass
 
 
-def rollback(pdir: Path, manifest: dict) -> None:
-    ck = sorted((pdir / "checkpoints").glob("project_*.json"))
+def rollback(pdir: Path, manifest: dict, txid: str | None = None) -> None:
+    """Restore the latest checkpoint associated with a transaction (or newest when omitted)."""
+    if txid:
+        candidates = sorted((pdir / "checkpoints").glob(f"project_*_tx_{txid}.json"))
+        if not candidates:
+            candidates = sorted((pdir / "checkpoints").glob("project_*.json"))
+        ck = candidates
+    else:
+        ck = sorted((pdir / "checkpoints").glob("project_*.json"))
     if ck:
         shutil.copy2(ck[-1], pdir / "project.json")
         import json as _json
@@ -127,7 +161,12 @@ def save_project(project_id: str, dest: str = "completed") -> dict:
     manifest = sketch.load_manifest(pdir)
 
     validation = manifest.get("validation", {})
+    if not isinstance(validation, dict):
+        validation = {}
     status = validation.get("status")
+    if validation.get("stale"):
+        raise McpError("SAVE_DENIED", f"VALIDATION_STALE: project changed ({validation.get('stale_reason')}).",
+                       suggestion="Run fritzing_validate_project again before saving.")
     if not status:
         raise McpError("SAVE_DENIED", "Project has never been validated.",
                        suggestion="Call fritzing_validate_project before saving.")
@@ -139,9 +178,12 @@ def save_project(project_id: str, dest: str = "completed") -> dict:
         dest_root = config.projects_rejected
         status_out = "rejected"
     else:
-        warnings_ok = True
-        if status == "PASS_WITH_WARNINGS" and not warnings_ok:
-            raise McpError("SAVE_DENIED", "Warnings present and policy forbids saving with warnings.")
+        from ..policy import save_policy
+
+        sp = save_policy()
+        if status == "PASS_WITH_WARNINGS" and not sp.get("allow_warnings", False):
+            raise McpError("SAVE_DENIED", "Warnings present and policy forbids saving with warnings.",
+                           suggestion=f"Fix warnings or enable policy 'save.allow_warnings'.")
         if dest == "completed":
             dest_root = config.projects_completed
         elif dest == "active":
@@ -151,14 +193,16 @@ def save_project(project_id: str, dest: str = "completed") -> dict:
         status_out = "verified" if status == "PASS" else "verified_with_warnings"
 
     # package .fzz
+    if status_out != "rejected" and manifest.get("state") not in (
+        "VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE",
+    ):
+        raise McpError(
+            "PROJECT_STATE_INVALID",
+            f"Cannot save a project in state {manifest.get('state')}.",
+            suggestion="Validate (and render/review) first, then save.",
+        )
     fzz = sketch.pack_fzz(pdir, manifest)
-    manifest["validation"] = validation
-    if status_out == "rejected":
-        transition(manifest, "CANCELLED") if False else None
-        manifest["state"] = "SAVED"
-    else:
-        if manifest["state"] not in ("SAVED", "READY_TO_SAVE", "REVIEWED", "VALIDATED", "RENDERED"):
-            raise McpError("PROJECT_STATE_INVALID", f"Cannot save from state {manifest['state']}.")
+    if manifest.get("state") not in ("SAVED",):
         manifest["state"] = "SAVED"
 
     dest_dir = dest_root / manifest["project_id"]

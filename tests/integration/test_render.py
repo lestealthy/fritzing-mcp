@@ -18,7 +18,9 @@ def test_render_led_golden():
     sketch.save_manifest(pdir, manifest)
     sketch.pack_fzz(pdir, manifest)
     validation.run_validation(pdir, manifest)
+    if manifest.get("state") == "WIRED":
+        manifest["state"] = "VALIDATED"
     sketch.save_manifest(pdir, manifest)
-    result = render.render_project(pdir, manifest, "all", timeout=300)
+    result = render.render_project(pdir, manifest, "all", timeout=45)
     assert result["status"] == "ok"
     assert result["svgs"]

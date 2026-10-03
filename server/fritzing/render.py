@@ -85,64 +85,150 @@ def _dismiss_dialogs(proc: subprocess.Popen, stop: threading.Event) -> None:
         time.sleep(0.5)
 
 
-def _builtin_view_svg(project_dir: Path, manifest: dict, view: str, render_dir: Path):
-    """Deterministic per-view composite of the parts' own SVGs (fallback renderer)."""
+_VIEW_VIEWBOX = {"breadboard": "breadboard", "schematic": "schematic", "pcb": "pcb"}
+
+
+def _part_svg_for_view(part_id: str, view: str):
+    try:
+        from .parts import find_part_file
+
+        fzp = find_part_file(part_id)
+    except Exception:
+        return None
+    if fzp is None:
+        return None
+    stem = fzp.stem
+    parts_dir = config.parts_dir / "svg"
+    for sub in ("core", "contrib", "user", "obsolete"):
+        folder = parts_dir / sub / view
+        if not folder.is_dir():
+            continue
+        exact = folder / f"{stem}_{view}.svg"
+        if exact.is_file():
+            return exact
+        for f in folder.iterdir():
+            if f.name.lower().endswith(f"_{view}.svg") and stem.lower().split("(")[0] in f.name.lower():
+                return f
+    return None
+
+
+def _connector_position(part_id: str, connector_id: str, view: str):
+    """Approximate connector position within a part's own view SVG (from connectorlayers/fzp)."""
+    import re
+    import sqlite3
     import xml.etree.ElementTree as ET
 
-    parts_dir = config.parts_dir / "svg"
-    elements = []
+    try:
+        conn = sqlite3.connect(str(config.parts_db))
+        row = conn.execute(
+            "SELECT cl.svgid FROM connectors c JOIN connectorlayers cl ON cl.connector_id=c.id "
+            "JOIN parts p ON p.id=c.part_id WHERE p.moduleID=? AND c.connectorid=? LIMIT 1",
+            (part_id, connector_id),
+        ).fetchone()
+        conn.close()
+    except Exception:
+        return None
+    if not row:
+        return None
+    svgid = row[0]
+    svg_file = _part_svg_for_view(part_id, view)
+    if svg_file is None or not svg_file.is_file():
+        return None
+    try:
+        for elem in ET.iterparse(str(svg_file)):
+            pass
+        root = ET.fromstring(svg_file.read_text(encoding="utf-8", errors="ignore"))
+        for elem in root.iter():
+            if elem.get("id") == svgid:
+                x = elem.get("x") or elem.get("cx")
+                y = elem.get("y") or elem.get("cy")
+                if x is not None and y is not None:
+                    return (float(x), float(y))
+                tr = elem.get("transform")
+                if tr:
+                    m = re.search(r"translate\(([-\d.]+)[, ]([-\d.]+)\)", tr)
+                    if m:
+                        return (float(m.group(1)), float(m.group(2)))
+    except Exception:
+        return None
+    return None
+
+
+def _builtin_view_svg(project_dir: Path, manifest: dict, view: str, render_dir: Path):
+    """Deterministic engineering preview: parts at real positions, wires between connectors."""
+    import xml.etree.ElementTree as ET
+
+    elements: list[tuple[float, float, str, str, str]] = []
+    connector_pos: dict[tuple[str, str], tuple[float, float]] = {}
     max_x = 200.0
     max_y = 200.0
-    W, H = 60.0, 40.0
-    for i, p in enumerate(manifest["parts"]):
-        fzp = None
-        try:
-            from .parts import find_part_file
-
-            fzp = find_part_file(p["part_id"])
-        except Exception:
-            fzp = None
-        if fzp is None:
+    for p in manifest["parts"]:
+        svg_file = _part_svg_for_view(p["part_id"], view)
+        if svg_file is None:
             continue
-        stem = fzp.stem
-        candidates = []
-        for sub in ("core", "contrib", "user", "obsolete"):
-            folder = parts_dir / sub / view
-            if folder.is_dir():
-                exact = folder / f"{stem}_{view}.svg"
-                if exact.is_file():
-                    candidates.append(exact)
-                else:
-                    candidates.extend(
-                        f for f in folder.iterdir()
-                        if f.name.lower().endswith(f"_{view}.svg") and stem.lower().split("(")[0] in f.name.lower()
-                    )
-        if not candidates:
-            continue
-        elements.append((p["x"], p["y"], candidates[0]))
-        max_x = max(max_x, p["x"] + 800)
-        max_y = max(max_y, p["y"] + 800)
+        elements.append((p["x"], p["y"], p["instance_id"], p["title"], str(svg_file)))
+        max_x = max(max_x, p["x"] + 900)
+        max_y = max(max_y, p["y"] + 900)
 
     if not elements:
         return None
-    out_lines = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{int(max_x)}" height="{int(max_y)}">',
-                 '<rect width="100%" height="100%" fill="white"/>']
-    for x, y, svg_path in elements:
+
+    # resolve connector endpoints (approximate, from part SVG geometry)
+    for c in manifest["connections"]:
+        for inst_key, conn_key in (("from_instance", "from_connector"), ("to_instance", "to_connector")):
+            inst_id = c[inst_key]
+            conn_id = c[conn_key]
+            for p in manifest["parts"]:
+                if p["instance_id"] == inst_id:
+                    pos = _connector_position(p["part_id"], conn_id, view)
+                    if pos:
+                        connector_pos[(inst_id, conn_id)] = (p["x"] + pos[0], p["y"] + pos[1])
+                    break
+
+    out_lines = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{int(max_x)}" height="{int(max_y)}">',
+        '<desc>engine: builtin-engineering-preview; precision: approximate; connections: labeled-wires</desc>',
+        '<rect width="100%" height="100%" fill="white"/>',
+    ]
+    for x, y, inst_id, title, svg_path in elements:
         try:
-            root = ET.fromstring(svg_path.read_text(encoding="utf-8", errors="ignore"))
+            root = ET.fromstring(Path(svg_path).read_text(encoding="utf-8", errors="ignore"))
             vb = root.get("viewBox")
             wa, ha = 700.0, 500.0
             if vb:
-                parts_vb = vb.split()
-                if len(parts_vb) == 4:
-                    wa, ha = float(parts_vb[2]), float(parts_vb[3])
-            inner = ET.tostring(root, encoding="unicode")
+                pvb = vb.split()
+                if len(pvb) == 4:
+                    wa, ha = float(pvb[2]), float(pvb[3])
             import re as _re
 
-            inner = _re.sub(r"^<\?xml[^>]*\?>", "", inner)
+            inner = _re.sub(r"^<\?xml[^>]*\?>", "", ET.tostring(root, encoding="unicode"))
             out_lines.append(f'<g transform="translate({x},{y})"><svg width="{wa}" height="{ha}" viewBox="0 0 {wa} {ha}">{inner}</svg></g>')
         except Exception:
             continue
+
+    # connector markers + wires
+    for c in manifest["connections"]:
+        a = connector_pos.get((c["from_instance"], c["from_connector"]))
+        b = connector_pos.get((c["to_instance"], c["to_connector"]))
+        for (p_inst, p_conn), pt in (
+            ((c["from_instance"], c["from_connector"]), a),
+            ((c["to_instance"], c["to_connector"]), b),
+        ):
+            if pt:
+                out_lines.append(f'<circle cx="{pt[0]}" cy="{pt[1]}" r="4" fill="#c33"/>')
+                out_lines.append(f'<text x="{pt[0] + 5}" y="{pt[1] - 5}" font-size="10" fill="#333">{p_inst}:{p_conn}</text>')
+        if a and b:
+            mx = (a[0] + b[0]) / 2
+            out_lines.append(
+                f'<polyline points="{a[0]},{a[1]} {mx},{a[1]} {mx},{b[1]} {b[0]},{b[1]}" fill="none" stroke="#c31" stroke-width="3"/>')
+        else:
+            # fallback marker line across instance origins (labeled as approximate)
+            for p1 in manifest["parts"]:
+                if p1["instance_id"] == c["from_instance"]:
+                    for p2 in manifest["parts"]:
+                        if p2["instance_id"] == c["to_instance"]:
+                            out_lines.append(
+                                f'<line x1="{p1["x"] + 350}" y1="{p1["y"] + 250}" x2="{p2["x"] + 350}" y2="{p2["y"] + 250}" stroke="#c31" stroke-width="3" stroke-dasharray="6,4"/>')
     out_lines.append("</svg>")
     out_path = render_dir / f"circuit_{view}.svg"
     out_path.write_text("\n".join(out_lines), encoding="utf-8")
@@ -173,6 +259,16 @@ def _run_fritzing_export(exe: Path, profile: Path, folder: Path, timeout: int) -
 
 def render_project(project_dir: Path, manifest: dict, view: str = "all", timeout: int = 90) -> dict:
     fzz = manifest.get("artifacts", {}).get("fzz")
+    # central render gate (tool layer also checks; defense in depth)
+    validation = manifest.get("validation", {})
+    if manifest.get("dirty") or validation.get("stale"):
+        raise McpError("PROJECT_NOT_VALIDATED", "Project changed after last validation; validate again.")
+    if not validation.get("status"):
+        raise McpError("PROJECT_NOT_VALIDATED", "Project has never been validated.")
+    if validation.get("status") == "FAIL":
+        raise McpError("RENDER_DENIED", "Validation FAILED; render denied.")
+    if manifest.get("state") not in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
+        raise McpError("PROJECT_NOT_VALIDATED", f"Render requires a validated project; state is {manifest.get('state')}.")
     if not fzz or not Path(fzz).is_file():
         raise McpError("RENDER_FAILED", "No .fzz artifact yet; save the project first.")
     exe = config.fritzing_exe
@@ -219,7 +315,7 @@ def render_project(project_dir: Path, manifest: dict, view: str = "all", timeout
 
     if not produced:
         # Deterministic fallback: composite per-view part SVGs ourselves.
-        engine = "builtin-svg:native_blank" if native_blank else "builtin-svg"
+        engine = "builtin-engineering-preview:native_blank" if native_blank else "builtin-engineering-preview"
         produced = []
         for view in ("breadboard", "schematic", "pcb"):
             try:
@@ -240,6 +336,7 @@ def render_project(project_dir: Path, manifest: dict, view: str = "all", timeout
     result = {
         "status": "ok",
         "engine": engine,
+        "precision": ("approximate" if engine.startswith("builtin") else "native"),
         "view": view,
         "svgs": [str(render_dir / p.name) for p in produced],
         "render_dir": str(render_dir),
