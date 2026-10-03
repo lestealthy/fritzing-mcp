@@ -85,6 +85,42 @@ def detect_renderer() -> dict:
     return {"available": exe_ok, "mechanism": "Fritzing -svg export" if exe_ok else None}
 
 
+def detect_user_parts_health() -> dict:
+    """Scan the user parts directory for duplicates, __MACOSX artifacts, malformed files."""
+    result = {"duplicates": 0, "macosx": 0, "malformed": 0, "total": 0}
+    up = config.user_parts_dir
+    if not up.is_dir():
+        return result
+    try:
+        seen_sizes = {}
+        for p in up.rglob("*"):
+            if not p.is_file():
+                continue
+            name = p.name
+            result["total"] += 1
+            low = name.lower()
+            if low.startswith("._") or "macosx" in str(p.parent).lower():
+                result["macosx"] += 1
+                continue
+            if low.endswith(".fzp"):
+                try:
+                    s = p.stat().st_size
+                    if s in seen_sizes:
+                        result["duplicates"] += 1
+                    else:
+                        seen_sizes[s] = 1
+                    try:
+                        import xml.etree.ElementTree as ET
+                        ET.fromstring(p.read_text(errors="ignore"))
+                    except Exception:
+                        result["malformed"] += 1
+                except Exception:
+                    result["malformed"] += 1
+    except Exception:
+        pass
+    return result
+
+
 def run_doctor() -> dict:
     checks = {
         "fritzing": detect_fritzing(),
@@ -95,8 +131,11 @@ def run_doctor() -> dict:
         "renderer": detect_renderer(),
     }
     lines = []
-    def add(ok: bool, label: str):
-        lines.append(f"[{'OK' if ok else 'FAIL'}] {label}")
+    def add(ok: bool | str, label: str):
+        if isinstance(ok, str):
+            lines.append(f"[{ok}] {label}")
+        else:
+            lines.append(f"[{'OK' if ok else 'FAIL'}] {label}")
 
     add(checks["fritzing"]["installed"], "Fritzing detected")
     add(bool(checks["fritzing"]["version"]), f"Version detected ({checks['fritzing']['version']})")
@@ -106,4 +145,26 @@ def run_doctor() -> dict:
     add(checks["renderer"]["available"], "Renderer available")
     add(checks["parts"]["fzp_checker_available"], "FZP checker available")
     add(checks["mcp"]["installed"], "MCP server dependencies installed")
-    return {"checks": checks, "report": "\n".join(lines)}
+
+    up_health = detect_user_parts_health()
+    warn = 0
+    if up_health["macosx"] > 0 or up_health["malformed"] > 0 or up_health["duplicates"] > 0:
+        if up_health["duplicates"] > 0:
+            lines.append(f"[WARN] Duplicate user part files detected ({up_health['duplicates']} size-matched)")
+        if up_health["macosx"] > 0:
+            lines.append(f"[WARN] __MACOSX/resource-fork files in user parts ({up_health['macosx']}) — Fritzing may show parse-error dialogs")
+        if up_health["malformed"] > 0:
+            lines.append(f"[WARN] Malformed .fzp files in user parts ({up_health['malformed']})")
+        lines.append("[WARN] User parts directory is polluted — MCP uses its own isolated profile (runtime\\fritzing-profile)")
+        warn = 1
+
+    profile_ok = (config.render_profile / "parts" / "parts.db").is_file() or config.parts_db.is_file()
+    add(profile_ok, "MCP isolated profile ready")
+    add(True, "Builtin fallback renderer available")
+
+    checks["user_parts_health"] = up_health
+    checks["isolated_profile"] = str(config.render_profile)
+    checks["warnings"] = warn
+    verdict = "FAIL" if not all([checks["fritzing"]["installed"], checks["parts"]["available"], checks["mcp"]["installed"]]) else ("WARN" if warn else "PASS")
+    lines.append(f"[{verdict}] Overall MCP environment verdict: {verdict}")
+    return {"checks": checks, "report": "\n".join(lines), "user_parts_health": up_health}

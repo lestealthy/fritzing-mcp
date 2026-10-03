@@ -249,6 +249,18 @@ def register(server) -> None:  # noqa: C901 - registration table
 
     # ---------------- custom parts (policy-gated) ----------------
     @server.tool()
+    def fritzing_check_portability(project_id: str) -> dict:
+        """Inspect generated artifacts; return a truthful portability diagnostic."""
+        try:
+            pdir = projects.get_project_dir(project_id)
+            manifest = sketch.load_manifest(pdir)
+            from ..fritzing.portability import check_project_portability
+
+            return check_project_portability(pdir, manifest)
+        except McpError as e:
+            return e.to_dict()
+
+    @server.tool()
     def fritzing_create_part(title: str = "") -> dict:
         if not custom_parts_enabled():
             return error_dict("CUSTOM_PARTS_DISABLED",

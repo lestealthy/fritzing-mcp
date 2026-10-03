@@ -1,0 +1,14 @@
+{
+  "name": "uno_led_resistor",
+  "description": "Golden reference: Arduino Uno + series resistor + red LED to GND",
+  "parts": [
+    {"part_id": "arduino_Uno_Rev3(fix)", "title": "Arduino Uno Rev3", "instance_id": "inst_0001"},
+    {"part_id": "ResistorModuleID", "title": "Resistor", "instance_id": "inst_0002"},
+    {"part_id": "1206ColorLEDModuleID", "title": "Red LED", "instance_id": "inst_0003"}
+  ],
+  "connections": [
+    {"from_instance": "inst_0001", "from_connector": "connector64", "to_instance": "inst_0002", "to_connector": "connector0"},
+    {"from_instance": "inst_0002", "from_connector": "connector1", "to_instance": "inst_0003", "to_connector": "connector1"},
+    {"from_instance": "inst_0003", "from_connector": "connector0", "to_instance": "inst_0001", "to_connector": "connector88"}
+  ]
+}

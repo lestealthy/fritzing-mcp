@@ -203,11 +203,50 @@ def validate_fz_xml(fzz_path: Path) -> list[dict]:
     return errs
 
 
+def electrical_nets(manifest: dict) -> list[dict]:
+    """DIstributed net summary: list of {nodes, rails, labels} for undirected wires."""
+    uf = _UnionFind()
+    for c in manifest["connections"]:
+        uf.union(f"{c['from_instance']}:{c['from_connector']}", f"{c['to_instance']}:{c['to_connector']}")
+    nodes = set()
+    for c in manifest["connections"]:
+        nodes.add(f"{c['from_instance']}:{c['from_connector']}")
+        nodes.add(f"{c['to_instance']}:{c['to_connector']}")
+    for p in manifest["parts"]:
+        try:
+            for c in get_connectors(p["part_id"]):
+                n = f"{p['instance_id']}:{c['connector_id']}"
+                if n in nodes:
+                    pass
+        except McpError:
+            continue
+    groups: dict[str, list[str]] = {}
+    for n in nodes:
+        groups.setdefault(uf.find(n), []).append(n)
+    net_rail = {}
+    for p in manifest["parts"]:
+        try:
+            for c in get_connectors(p["part_id"]):
+                rail = _classify_rail(c["name"] or "") if c["name"] else None
+                net_rail[f"{p['instance_id']}:{c['connector_id']}"] = (rail, c["name"] or "")
+        except McpError:
+            continue
+    out = []
+    for root, members in sorted(groups.items(), key=lambda kv: len(kv[1]), reverse=True):
+        rails = sorted({net_rail.get(m, (None, ""))[0] for m in members if net_rail.get(m, (None, ""))[0]})
+        out.append({"net_id": f"NET_{len(out)+1:03d}", "size": len(members), "nodes": sorted(members), "rails": rails})
+    return out
+
+
 def run_validation(project_dir: Path, manifest: dict) -> dict:
     stages: dict[str, list[dict]] = {}
     stages["schema"] = validate_manifest_structure(manifest)
     stages["electrical"] = electrical_check(manifest)
     stages["structure"] = []
+    try:
+        nets = electrical_nets(manifest)
+    except Exception:
+        nets = []
     fzz = manifest.get("artifacts", {}).get("fzz")
     if fzz and Path(fzz).is_file():
         stages["structure"] = validate_fz_xml(Path(fzz))
@@ -226,6 +265,7 @@ def run_validation(project_dir: Path, manifest: dict) -> dict:
         "errors": errors,
         "warnings": warnings,
         "needs_human_review": review,
+        "logical_nets": nets,
         "stages": {k: len(v) for k, v in stages.items()},
         "stale": False,
         "timestamp": __import__("datetime").datetime.now().isoformat(),

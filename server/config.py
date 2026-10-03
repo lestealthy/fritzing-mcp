@@ -33,7 +33,7 @@ class Config:
         self.projects_rejected = self.projects_dir / "rejected"
         self.parts_cache_dir = PROJECT_ROOT / "parts" / "cache"
         self.policy_file = PROJECT_ROOT / "policy" / "policy.json"
-        self.render_profile = PROJECT_ROOT / "cache" / "fritzing_profile"
+        self.render_profile = PROJECT_ROOT / "runtime" / "fritzing-profile"
         self.server_version = "1.0.0"
         self.policy_version = "1.0.0"
 

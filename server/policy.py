@@ -128,7 +128,7 @@ def invalidate_validation(manifest: dict, reason: str = "mutation") -> None:
     """Centrally invalidate prior validation after any structural mutation."""
     manifest["dirty"] = True
     manifest["validation"] = {"status": None, "stale": True, "stale_reason": reason}
-    if manifest.get("state") in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE"):
+    if manifest.get("state") in ("VALIDATED", "RENDERED", "REVIEWED", "READY_TO_SAVE", "SAVED"):
         # revert to the appropriate editing state
         if manifest.get("connections"):
             manifest["state"] = "WIRED"

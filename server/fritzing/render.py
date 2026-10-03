@@ -31,6 +31,7 @@ def ensure_profile() -> Path:
     for name, src in (
         ("bins", config.fritzing_dir / "fritzing-parts" / "bins"),
         ("translations", config.fritzing_dir / "translations"),
+        ("fritzing-parts", config.fritzing_dir / "fritzing-parts"),
     ):
         link = prof / name
         try:
@@ -337,6 +338,9 @@ def render_project(project_dir: Path, manifest: dict, view: str = "all", timeout
         "status": "ok",
         "engine": engine,
         "precision": ("approximate" if engine.startswith("builtin") else "native"),
+        "native_fritzing_export": engine == "fritzing-native",
+        "electrical_authority": "project-manifest",
+        "visual_authority": ("fritzing" if engine == "fritzing-native" else "approximate"),
         "view": view,
         "svgs": [str(render_dir / p.name) for p in produced],
         "render_dir": str(render_dir),
