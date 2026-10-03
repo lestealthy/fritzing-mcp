@@ -1,0 +1,35 @@
+{
+  "status": "FAIL",
+  "errors": [
+    {
+      "severity": "ERROR",
+      "code": "POWER_CONFLICT",
+      "message": "5V rail connected to 3.3V rail.",
+      "net_nodes": [
+        "inst_0001:connector46",
+        "inst_0002:connector86"
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "severity": "WARNING",
+      "code": "MISSING_GROUND",
+      "message": "Part 'A' has no GND connection.",
+      "part": "inst_0001"
+    },
+    {
+      "severity": "WARNING",
+      "code": "MISSING_GROUND",
+      "message": "Part 'B' has no GND connection.",
+      "part": "inst_0002"
+    }
+  ],
+  "needs_human_review": [],
+  "stages": {
+    "schema": 0,
+    "electrical": 3,
+    "structure": 0
+  },
+  "timestamp": "2026-10-03T14:33:16.305868"
+}

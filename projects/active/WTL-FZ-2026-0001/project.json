@@ -1,0 +1,25 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0001",
+  "name": "smoke",
+  "description": "smoke test",
+  "template": null,
+  "created": "2026-10-03T13:17:41.762201+00:00",
+  "modified": "2026-10-03T13:18:07.473053+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [],
+  "connections": [],
+  "validation": {},
+  "artifacts": {
+    "fzz": "C:\\Users\\Stealthy\\Desktop\\MCP\\fritzing_mcp\\projects\\active\\WTL-FZ-2026-0001\\circuit_20261003141807.fzz",
+    "fz": "C:\\Users\\Stealthy\\Desktop\\MCP\\fritzing_mcp\\projects\\active\\WTL-FZ-2026-0001\\circuit.fz"
+  },
+  "next_instance_seq": 1,
+  "next_wire_seq": 1
+}

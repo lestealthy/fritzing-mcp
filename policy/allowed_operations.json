@@ -1,0 +1,31 @@
+{
+  "allowed_tools": [
+    "fritzing_status",
+    "fritzing_search_parts",
+    "fritzing_get_part",
+    "fritzing_get_part_connectors",
+    "fritzing_create_project",
+    "fritzing_get_project",
+    "fritzing_save_project",
+    "fritzing_place_part",
+    "fritzing_move_part",
+    "fritzing_wire",
+    "fritzing_validate_project",
+    "fritzing_render",
+    "fritzing_visual_report",
+    "fritzing_create_part",
+    "fritzing_validate_part"
+  ],
+  "denied_tool_categories": [
+    "execute_command",
+    "execute_shell",
+    "execute_python",
+    "execute_powershell",
+    "execute_javascript",
+    "http_request",
+    "read_file",
+    "write_file",
+    "delete_file",
+    "open_process"
+  ]
+}

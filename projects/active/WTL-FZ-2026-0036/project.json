@@ -1,0 +1,78 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0036",
+  "name": "render_led",
+  "description": "render test",
+  "template": null,
+  "created": "2026-10-03T13:43:39.522197+00:00",
+  "modified": "2026-10-03T13:54:36.921907+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "WIRED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [
+    {
+      "instance_id": "inst_0001",
+      "part_id": "arduino_Uno_Rev3(fix)",
+      "title": "Uno",
+      "x": 100.0,
+      "y": 100.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    },
+    {
+      "instance_id": "inst_0002",
+      "part_id": "ResistorModuleID",
+      "title": "R1",
+      "x": 500.0,
+      "y": 100.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    }
+  ],
+  "connections": [
+    {
+      "connection_id": "wire_0001",
+      "from_instance": "inst_0001",
+      "from_connector": "connector64",
+      "to_instance": "inst_0002",
+      "to_connector": "connector0"
+    }
+  ],
+  "validation": {
+    "status": "PASS_WITH_WARNINGS",
+    "errors": [],
+    "warnings": [
+      {
+        "severity": "WARNING",
+        "code": "MISSING_POWER",
+        "message": "Part 'Uno' appears unpowered.",
+        "part": "inst_0001"
+      },
+      {
+        "severity": "WARNING",
+        "code": "MISSING_GROUND",
+        "message": "Part 'Uno' has no GND connection.",
+        "part": "inst_0001"
+      }
+    ],
+    "needs_human_review": [],
+    "stages": {
+      "schema": 0,
+      "electrical": 2,
+      "structure": 0
+    },
+    "timestamp": "2026-10-03T14:43:39.543647"
+  },
+  "artifacts": {
+    "fzz": "C:\\Users\\Stealthy\\Desktop\\MCP\\fritzing_mcp\\projects\\active\\WTL-FZ-2026-0036\\circuit.fzz",
+    "fz": "C:\\Users\\Stealthy\\Desktop\\MCP\\fritzing_mcp\\projects\\active\\WTL-FZ-2026-0036\\circuit.fz"
+  },
+  "next_instance_seq": 3,
+  "next_wire_seq": 2
+}

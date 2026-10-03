@@ -1,0 +1,22 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0002",
+  "name": "pytest_led",
+  "description": "test project",
+  "template": null,
+  "created": "2026-10-03T13:32:44.734350+00:00",
+  "modified": "2026-10-03T13:32:44.734369+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [],
+  "connections": [],
+  "validation": {},
+  "artifacts": {},
+  "next_instance_seq": 1,
+  "next_wire_seq": 1
+}

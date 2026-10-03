@@ -1,0 +1,65 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0012",
+  "name": "golden_sensor",
+  "description": "golden sensor",
+  "template": null,
+  "created": "2026-10-03T13:32:44.862900+00:00",
+  "modified": "2026-10-03T13:32:44.874626+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [
+    {
+      "instance_id": "inst_0001",
+      "part_id": "arduino_Uno_Rev3(fix)",
+      "title": "Uno",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    },
+    {
+      "instance_id": "inst_0002",
+      "part_id": "DS18B20_fixed",
+      "title": "DS18B20",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    }
+  ],
+  "connections": [
+    {
+      "connection_id": "wire_0001",
+      "from_instance": "inst_0001",
+      "from_connector": "connector87",
+      "to_instance": "inst_0002",
+      "to_connector": "connector3"
+    },
+    {
+      "connection_id": "wire_0002",
+      "from_instance": "inst_0001",
+      "from_connector": "connector88",
+      "to_instance": "inst_0002",
+      "to_connector": "connector1"
+    },
+    {
+      "connection_id": "wire_0003",
+      "from_instance": "inst_0001",
+      "from_connector": "connector64",
+      "to_instance": "inst_0002",
+      "to_connector": "connector2"
+    }
+  ],
+  "validation": {},
+  "artifacts": {},
+  "next_instance_seq": 3,
+  "next_wire_seq": 4
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="1.0.8" icon="WTL-FZ-2026-0001.png">
+    <project_properties>
+        <simulator_animation_time_s value="5s"/>
+        <simulator_number_of_steps value="400"/>
+        <simulator_spice_options value=""/>
+        <simulator_time_step_mode value="false"/>
+        <simulator_time_step_s value="1us"/>
+    </project_properties>
+    <boards>
+        <board moduleId="pcb-arduino-r3-shield" title="Arduino Shield PCB" instance="PCB1" width="6.88566cm" height="5.36311cm"/>
+    </boards>
+    <views>
+        <view name="breadboardView" backgroundColor="#ffffff" gridSize="0.1in" showGrid="1" alignToGrid="0" viewFromBelow="0" colorWiresByLength="0"/>
+        <view name="schematicView" backgroundColor="#ffffff" gridSize="0.1in" showGrid="1" alignToGrid="1" viewFromBelow="0"/>
+        <view name="pcbView" backgroundColor="#333333" gridSize="0.05in" showGrid="1" alignToGrid="1" viewFromBelow="0" DRC_Keepout="0.01in" autorouteViaRingThickness="0.3mm" GPG_Keepout="" autorouteTraceWidth="24" autorouteViaHoleSize="0.4mm"/>
+    </views>
+    <instances>
+    </instances>
+</module>

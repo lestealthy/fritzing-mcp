@@ -1,0 +1,241 @@
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  --><svg width="78.0812mm" height="12.7990mm" enable-background="new -62.588 8.49 147.072 36.187" overflow="visible" version="1.1" viewBox="0 0 295.11 48.374" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <metadata>
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+                <dc:title/>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    
+    <desc>
+        <referenceFile>RGB Strip LED_bb.svg</referenceFile>
+    </desc>
+    <g id="breadboard">
+        <path d="m0.48047 5.7695v36.836h294.14v-36.836zm124.71 17.662a0.75591 0.75591 0 0 1 0.75586 0.75586 0.75591 0.75591 0 0 1-0.75586 0.75586 0.75591 0.75591 0 0 1-0.75586-0.75586 0.75591 0.75591 0 0 1 0.75586-0.75586zm45.127 0a0.75591 0.75591 0 0 1 0.75586 0.75586 0.75591 0.75591 0 0 1-0.75586 0.75586 0.75591 0.75591 0 0 1-0.75586-0.75586 0.75591 0.75591 0 0 1 0.75586-0.75586z" fill="#203060"/>
+        <path d="m125.19 5.2895v37.795" fill="none" stroke="#f9f9f9" stroke-width=".48"/>
+        <path d="m170.32 5.2895v37.795" fill="none" stroke="#fff" stroke-width=".48"/>
+        
+        
+        
+        
+        
+        
+        <g transform="translate(50.767 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">+12V</text>
+        </g>
+        <g transform="translate(38.212 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">DI</text>
+        </g><g transform="translate(38.212 7.1761)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">BI</text>
+        </g>
+        <g transform="translate(26.35 -1.8229)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">GND</text>
+        </g><g transform="translate(220.99 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">+12V</text>
+        </g><g transform="translate(208.43 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">DI</text>
+        </g><g transform="translate(208.43 7.1766)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">BI</text>
+        </g><g transform="translate(196.57 -1.8231)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">GND</text>
+        </g><g transform="translate(175.86 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">+12V</text>
+        </g><g transform="translate(163.3 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">DI</text>
+        </g><g transform="translate(163.3 7.1766)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">BI</text>
+        </g><g transform="translate(151.44 -1.8231)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px">GND</text>
+        </g>
+        <path d="m50.554 24.187-3.7406 4.3543v-8.7085z" fill="#fff"/>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <path id="connector3pin" d="m7.58 19.656c0 1.6668-1.3171 3.0181-2.9372 3.0181h-4.5428v-6.04h4.5428c1.6201 0 2.9372 1.3526 2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path id="connector2pin" d="m7.58 28.722c0 1.6668-1.3171 3.0181-2.9372 3.0181h-4.5428v-6.04h4.5428c1.6201 0 2.9372 1.3526 2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path id="connector1pin" d="m7.58 37.789c0 1.6668-1.3171 3.0181-2.9372 3.0181h-4.5428v-6.04h4.5428c1.6201 0 2.9372 1.3526 2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path id="connector4pin" d="m7.58 10.589c0 1.6668-1.3171 3.0181-2.9372 3.0181h-4.5428v-6.04h4.5428c1.6201 0 2.9372 1.3526 2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        
+        <path d="m120.65 34.768c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path d="m120.65 25.701c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path d="m120.65 16.635c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path d="m120.65 7.5664c-1.6201 0-2.9375 1.3541-2.9375 3.0234 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0234-2.9375-3.0234h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path id="connector7pin" d="m287.53 19.656c0 1.6668 1.3171 3.0181 2.9372 3.0181h4.5428v-6.04h-4.5428c-1.6201 0-2.9372 1.3526-2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path id="connector6pin" d="m287.53 28.722c0 1.6668 1.3171 3.0181 2.9372 3.0181h4.5428v-6.04h-4.5428c-1.6201 0-2.9372 1.3526-2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path id="connector5pin" d="m287.53 37.789c0 1.6668 1.3171 3.0181 2.9372 3.0181h4.5428v-6.04h-4.5428c-1.6201 0-2.9372 1.3526-2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path id="connector8pin" d="m287.53 10.589c0 1.6668 1.3171 3.0181 2.9372 3.0181h4.5428v-6.04h-4.5428c-1.6201 0-2.9372 1.3526-2.9372 3.0219z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        
+        <path d="m165.78 34.768c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path d="m165.78 25.701c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/><path d="m165.78 16.635c-1.6201 0-2.9375 1.3521-2.9375 3.0215 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0215-2.9375-3.0215h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path d="m165.78 7.5664c-1.6201 0-2.9375 1.3541-2.9375 3.0234 0 1.6668 1.3174 3.0176 2.9375 3.0176h9.0859c1.6201 0 2.9375-1.3508 2.9375-3.0176 0-1.6693-1.3174-3.0234-2.9375-3.0234h-4.543z" fill="#e5ab6b" stroke="#6b6b6a" stroke-width=".2"/>
+        <path d="m219.8 24.187-3.7406 4.3543v-8.7085z" fill="#fff"/>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <g transform="rotate(180)" fill="#9a916c" stroke-width="1.3333">
+            <rect x="-57.846" y="-35.525" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-70.318" y="-35.526" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-70.318" y="-17.763" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-57.846" y="-17.761" width="4.536" height="4.9133"/>
+        </g>
+        <g transform="rotate(180)" stroke-width="1.3333">
+            <rect x="-69.56" y="-34.392" width="2.6453" height="20.409" fill="#dcdcdc"/>
+        
+        
+            <rect x="-57.088" y="-34.392" width="2.6453" height="20.409" fill="#dcdcdc"/>
+        
+        
+            <rect x="-71.451" y="-33.636" width="18.897" height="18.897" fill="#e6e6e6"/>
+        </g>
+        <g transform="rotate(90)" stroke-width="1.3333">
+            <circle cx="24.188" cy="-62.002" r="8.032" fill="#dcdcdc"/>
+        
+        
+            <circle cx="24.188" cy="-62.002" r="6.6147" fill="#c8c8c8"/>
+        </g>
+        <g transform="matrix(0 1.3333 -1.3333 0 74.097 13.982)">
+            <polygon points="3.118 1.984 0.567 1.984 0.567 4.535" fill="#dcdcdc"/>
+        </g>
+        <path d="m65.782 28.284h-0.16517c-0.20939 0-0.3772-0.16932-0.3772-0.3772v-2.6747c0-0.20939 0.16932-0.3772 0.3772-0.3772h2.932c0.02268-0.22261 0.06652-0.43869 0.06652-0.66667 0-0.22791-0.04384-0.44402-0.06652-0.66667h-9.2067c-0.20939 0-0.3772-0.16932-0.3772-0.3772v-2.676c0-0.20939 0.16932-0.3772 0.3772-0.3772h6.44c0.20938 0 0.3772-0.16932 0.3772-0.3772v-0.63194c-1.1387-0.92802-2.5733-1.508-4.1573-1.508-1.684 0-3.2027 0.648-4.3706 1.684v3.8854c0 0.20938-0.16932 0.3772-0.3772 0.3772h-1.7987c-0.02268 0.22262-0.06652 0.43865-0.06652 0.66667 0 0.22791 0.04384 0.44398 0.06652 0.66667h8.072c0.20939 0 0.3772 0.16932 0.3772 0.3772v2.6747c0 0.20939-0.16932 0.3772-0.3772 0.3772h-5.3053c-0.20939 0-0.3772 0.16932-0.3772 0.3772v0.63065c1.1387 0.92802 2.5733 1.508 4.1573 1.508 1.584 0 3.0187-0.58001 4.1573-1.508v-0.62797c0-0.20939-0.16932-0.37867-0.3772-0.37867z" fill="#f0f0f0" stroke-width="1.3333"/>
+        <g transform="rotate(180)" stroke-width="1.3333">
+            <rect x="-62.305" y="-23.303" width="2.268" height="3.024" fill="#645050"/>
+        
+        
+            <rect x="-62.381" y="-26.442" width=".756" height="1.1333" fill="#999"/>
+        
+        
+            <rect x="-58.601" y="-26.443" width=".756" height="1.1333" fill="#999"/>
+        
+        
+            <rect x="-66.16" y="-26.443" width=".756" height="1.1333" fill="#999"/>
+        </g>
+        <path d="m71.263 33.636v-18.898" fill="none" stroke="#b4b4b4" stroke-width=".37795"/>
+        <path d="m71.452 14.738h-18.898" fill="none" stroke="#fff" stroke-width=".37795"/>
+        <path d="m71.451 33.636h-18.898" fill="none" stroke="#b3b3b3" stroke-width=".37795"/>
+        <path d="m52.743 33.636v-18.898" fill="none" stroke="#fff" stroke-width=".37795"/>
+        <g transform="translate(114.19 -63.407)">
+            <text x="-40.952736" y="89.29039" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">WS2815</text>
+        </g>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <g transform="rotate(180)" fill="#9a916c" stroke-width="1.3333">
+            <rect x="-227.09" y="-35.526" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-239.57" y="-35.527" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-239.57" y="-17.763" width="4.536" height="4.9133"/>
+        
+        
+            <rect x="-227.09" y="-17.762" width="4.536" height="4.9133"/>
+        </g>
+        <g transform="rotate(180)" stroke-width="1.3333">
+            <rect x="-238.81" y="-34.393" width="2.6453" height="20.409" fill="#dcdcdc"/>
+        
+        
+            <rect x="-226.34" y="-34.393" width="2.6453" height="20.409" fill="#dcdcdc"/>
+        
+        
+            <rect x="-240.7" y="-33.636" width="18.897" height="18.897" fill="#e6e6e6"/>
+        </g>
+        <g transform="rotate(90)" stroke-width="1.3333">
+            <circle cx="24.188" cy="-231.25" r="8.032" fill="#dcdcdc"/>
+        
+        
+            <circle cx="24.188" cy="-231.25" r="6.6147" fill="#c8c8c8"/>
+        </g>
+        <g transform="matrix(0 1.3333 -1.3333 0 243.34 13.982)">
+            <polygon points="3.118 1.984 0.567 1.984 0.567 4.535" fill="#dcdcdc"/>
+        </g>
+        <path d="m235.03 28.284h-0.16517c-0.20938 0-0.37719-0.16932-0.37719-0.3772v-2.6747c0-0.20939 0.16932-0.3772 0.37719-0.3772h2.932c0.0227-0.22261 0.0665-0.43869 0.0665-0.66667 0-0.22791-0.0438-0.44402-0.0665-0.66667h-9.2067c-0.20939 0-0.3772-0.16932-0.3772-0.3772v-2.676c0-0.20939 0.16932-0.3772 0.3772-0.3772h6.44c0.20938 0 0.37719-0.16932 0.37719-0.3772v-0.63194c-1.1386-0.92802-2.5733-1.508-4.1573-1.508-1.684 0-3.2027 0.648-4.3706 1.684v3.8854c0 0.20938-0.16932 0.3772-0.3772 0.3772h-1.7987c-0.0227 0.22262-0.0665 0.43865-0.0665 0.66667 0 0.22791 0.0438 0.44398 0.0665 0.66667h8.072c0.20939 0 0.3772 0.16932 0.3772 0.3772v2.6747c0 0.20939-0.16933 0.3772-0.3772 0.3772h-5.3053c-0.20939 0-0.3772 0.16932-0.3772 0.3772v0.63065c1.1387 0.92802 2.5733 1.508 4.1573 1.508s3.0187-0.58001 4.1573-1.508v-0.62797c0-0.20939-0.16933-0.37867-0.3772-0.37867z" fill="#f0f0f0" stroke-width="1.3333"/>
+        <g transform="rotate(180)" stroke-width="1.3333">
+            <rect x="-231.55" y="-23.304" width="2.268" height="3.024" fill="#645050"/>
+        
+        
+            <rect x="-231.63" y="-26.442" width=".756" height="1.1333" fill="#999"/>
+        
+        
+            <rect x="-227.85" y="-26.444" width=".756" height="1.1333" fill="#999"/>
+        
+        
+            <rect x="-235.41" y="-26.444" width=".756" height="1.1333" fill="#999"/>
+        </g>
+        <path d="m240.51 33.636v-18.898" fill="none" stroke="#b4b4b4" stroke-width=".37795"/>
+        <path d="m240.7 14.738h-18.898" fill="none" stroke="#fff" stroke-width=".37795"/>
+        <path d="m240.7 33.636h-18.898" fill="none" stroke="#b3b3b3" stroke-width=".37795"/>
+        <path d="m221.99 33.636v-18.898" fill="none" stroke="#fff" stroke-width=".37795"/>
+        
+        
+        
+        
+        
+    <g transform="translate(144.29 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">+12V</text>
+        </g><g transform="translate(137.59 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">DO</text>
+        </g><g transform="translate(137.99 7.1766)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">BO</text>
+        </g><g transform="translate(122.11 -1.8231)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">GND</text>
+        </g><g transform="translate(189.42 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">+12V</text>
+        </g><g transform="translate(182.72 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">DO</text>
+        </g><g transform="translate(183.11 7.1766)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">BO</text>
+        </g><g transform="translate(167.24 -1.8231)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">GND</text>
+        </g><path d="m151.09 0.12712h8.7449l-12.198 48.12h-8.7449z" fill="#fff"/><path d="m159.83 1.7721-12.65 45.088" fill="none" stroke="#000" stroke-width="1.92"/><path d="m150.76 1.7721-12.65 45.088" fill="none" stroke="#000" stroke-width="1.92"/><g transform="translate(283.44 -63.407)">
+            <text x="-40.952736" y="89.29039" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">WS2815</text>
+        </g><g transform="translate(314.11 25.415)">
+            <text x="-41.565773" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">+12V</text>
+        </g><g transform="translate(307.4 16.243)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">DO</text>
+        </g><g transform="translate(307.8 7.1761)">
+            <text x="-28.98735" y="14.174158" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">BO</text>
+        </g><g transform="translate(291.93 -1.8229)">
+            <text x="-16.931919" y="14.104166" dominant-baseline="auto" fill="#ffffff" font-family="OCRA" font-size="4.6667" letter-spacing="0px" word-spacing="0px" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;line-height:1.25;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal">GND</text>
+        </g></g>
+</svg>

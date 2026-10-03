@@ -1,0 +1,19 @@
+{
+  "status": "PASS_WITH_WARNINGS",
+  "errors": [],
+  "warnings": [],
+  "needs_human_review": [
+    {
+      "severity": "NEEDS_HUMAN_REVIEW",
+      "code": "FLOATING_PINS",
+      "message": "Part 'Uno' has 41 unconnected pin(s).",
+      "part": "inst_0001"
+    }
+  ],
+  "stages": {
+    "schema": 0,
+    "electrical": 1,
+    "structure": 0
+  },
+  "timestamp": "2026-10-03T14:32:44.886963"
+}

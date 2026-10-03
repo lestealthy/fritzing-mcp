@@ -1,0 +1,33 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0025",
+  "name": "pytest_led",
+  "description": "test project",
+  "template": null,
+  "created": "2026-10-03T13:33:16.239328+00:00",
+  "modified": "2026-10-03T13:33:16.246572+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [
+    {
+      "instance_id": "inst_0001",
+      "part_id": "arduino_Uno_Rev3(fix)",
+      "title": "Uno",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    }
+  ],
+  "connections": [],
+  "validation": {},
+  "artifacts": {},
+  "next_instance_seq": 2,
+  "next_wire_seq": 1
+}

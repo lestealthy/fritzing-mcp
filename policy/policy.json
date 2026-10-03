@@ -1,0 +1,34 @@
+{
+  "filesystem": {
+    "controlled_root_only": true,
+    "allow_arbitrary_paths": false,
+    "allow_unc": false
+  },
+  "shell": {
+    "enabled": false
+  },
+  "custom_parts": {
+    "enabled": false
+  },
+  "community_parts": {
+    "enabled": false
+  },
+  "overwrite": {
+    "enabled": false
+  },
+  "network": {
+    "enabled": false
+  },
+  "parts_search": {
+    "max_limit": 50
+  },
+  "save": {
+    "require_valid_validation": true,
+    "allow_warnings": true
+  },
+  "zip": {
+    "max_files": 200,
+    "max_total_bytes": 200000000,
+    "max_member_bytes": 50000000
+  }
+}

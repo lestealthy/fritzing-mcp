@@ -1,0 +1,75 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0022",
+  "name": "golden_led",
+  "description": "golden LED",
+  "template": null,
+  "created": "2026-10-03T13:33:04.458654+00:00",
+  "modified": "2026-10-03T13:33:04.469300+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [
+    {
+      "instance_id": "inst_0001",
+      "part_id": "arduino_Uno_Rev3(fix)",
+      "title": "Uno",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    },
+    {
+      "instance_id": "inst_0002",
+      "part_id": "ResistorModuleID",
+      "title": "R1",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "OFFICIAL"
+    },
+    {
+      "instance_id": "inst_0003",
+      "part_id": "805RedLEDModuleID",
+      "title": "LED",
+      "x": 0.0,
+      "y": 0.0,
+      "rotation": 0,
+      "view": "breadboard",
+      "trust": "REJECTED"
+    }
+  ],
+  "connections": [
+    {
+      "connection_id": "wire_0001",
+      "from_instance": "inst_0001",
+      "from_connector": "connector64",
+      "to_instance": "inst_0002",
+      "to_connector": "connector0"
+    },
+    {
+      "connection_id": "wire_0002",
+      "from_instance": "inst_0002",
+      "from_connector": "connector1",
+      "to_instance": "inst_0003",
+      "to_connector": "connector1"
+    },
+    {
+      "connection_id": "wire_0003",
+      "from_instance": "inst_0003",
+      "from_connector": "connector0",
+      "to_instance": "inst_0001",
+      "to_connector": "connector88"
+    }
+  ],
+  "validation": {},
+  "artifacts": {},
+  "next_instance_seq": 4,
+  "next_wire_seq": 4
+}

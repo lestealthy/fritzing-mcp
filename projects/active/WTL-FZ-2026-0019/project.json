@@ -1,0 +1,22 @@
+{
+  "manifest_version": 1,
+  "project_id": "WTL-FZ-2026-0019",
+  "name": "pytest_power",
+  "description": "conflict",
+  "template": null,
+  "created": "2026-10-03T13:33:04.415043+00:00",
+  "modified": "2026-10-03T13:33:04.415055+00:00",
+  "server_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "state": "CREATED",
+  "steps": {
+    "searched": false,
+    "inspected_connectors": false
+  },
+  "parts": [],
+  "connections": [],
+  "validation": {},
+  "artifacts": {},
+  "next_instance_seq": 1,
+  "next_wire_seq": 1
+}

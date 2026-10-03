@@ -1,0 +1,25 @@
+{
+  "status": "PASS_WITH_WARNINGS",
+  "errors": [],
+  "warnings": [
+    {
+      "severity": "WARNING",
+      "code": "MISSING_POWER",
+      "message": "Part 'Uno' appears unpowered.",
+      "part": "inst_0001"
+    },
+    {
+      "severity": "WARNING",
+      "code": "MISSING_GROUND",
+      "message": "Part 'Uno' has no GND connection.",
+      "part": "inst_0001"
+    }
+  ],
+  "needs_human_review": [],
+  "stages": {
+    "schema": 0,
+    "electrical": 2,
+    "structure": 0
+  },
+  "timestamp": "2026-10-03T14:43:39.543647"
+}
